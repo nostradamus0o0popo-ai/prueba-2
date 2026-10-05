@@ -32,151 +32,154 @@
             color: #333;
         }
 
-        /* BARRA SUPERIOR ANUNCIO */
-        .top-banner-bar {
-            background: linear-gradient(90deg, #ffcc00, #ff9900);
-            color: #1a1a1a;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 6px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* HEADER PRINCIPAL */
+        /* ENCABEZADO ÚNICO AMARILLO PROFESIONAL */
         header {
-            background-color: #fff;
-            border-bottom: 3px solid #ffcc00;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: linear-gradient(90deg, #ffcc00, #ffbb00);
+            border-bottom: 4px solid #e60012;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            padding: 8px 0;
         }
 
         .header-container {
-            max-width: 1350px;
+            max-width: 1450px;
             margin: 0 auto;
-            padding: 12px 20px;
+            padding: 0 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 12px;
+            flex-wrap: nowrap;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
+            white-space: nowrap;
         }
 
-        .logo-badge {
-            background: linear-gradient(135deg, #e60012, #b3000d);
-            color: #ffcc00;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-family: 'Baloo 2', cursive;
-            font-size: 26px;
-            font-weight: 800;
-            box-shadow: 0 4px 10px rgba(230,0,18,0.3);
-            border: 2px solid #ffcc00;
-            letter-spacing: 1px;
-            transform: rotate(-2deg);
-        }
-
-        .logo-text span {
-            display: block;
-            font-size: 11px;
-            color: var(--gray);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .logo-img {
+            height: 55px;
+            border-radius: 8px;
         }
 
         /* BUSCADOR */
         .search-box {
             flex: 1;
-            max-width: 450px;
+            max-width: 350px;
             position: relative;
         }
 
         .search-box input {
             width: 100%;
-            padding: 10px 18px 10px 42px;
+            padding: 9px 15px 9px 40px;
             border-radius: 50px;
-            border: 2px solid #e1e4e8;
+            border: 2px solid #fff;
             outline: none;
-            font-size: 14px;
+            font-size: 13px;
+            background-color: rgba(255, 255, 255, 0.9);
             transition: all 0.3s;
-            background-color: #f8f9fa;
         }
 
         .search-box input:focus {
-            border-color: var(--primary);
             background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(230,0,18,0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(230,0,18,0.15);
         }
 
         .search-box i {
             position: absolute;
-            left: 16px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray);
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        /* MENU NAVEGACION SUPERIOR */
+        /* MENU NAVEGACION HORIZONTAL */
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 15px;
+            gap: 6px;
             align-items: center;
         }
 
         .nav-menu a {
             text-decoration: none;
-            color: #333;
-            font-size: 13px;
-            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 11px;
+            font-weight: 700;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            padding: 6px 10px;
+            gap: 2px;
+            padding: 5px 6px;
             border-radius: 8px;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .nav-menu a i {
-            font-size: 16px;
-            color: var(--primary);
+            font-size: 15px;
+            color: #1a1a1a;
         }
 
         .nav-menu a:hover, .nav-menu a.active {
-            background-color: #fff5f5;
+            background-color: rgba(0, 0, 0, 0.08);
             color: var(--primary);
         }
 
-        .btn-cart-toggle {
-            background: linear-gradient(135deg, var(--primary), #b3000d);
-            color: white !important;
-            padding: 8px 16px !important;
-            border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(230,0,18,0.25);
+        .nav-menu a:hover i {
+            color: var(--primary);
         }
 
-        .btn-cart-toggle i {
+        /* BOTON MI ORDEN ROSADO */
+        .btn-cart-header {
+            background: var(--primary) !important;
             color: white !important;
+            padding: 6px 14px !important;
+            border-radius: 50px !important;
+            box-shadow: 0 3px 10px rgba(230,0,18,0.3);
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 6px !important;
+            font-size: 13px !important;
+            text-decoration: none;
+            white-space: nowrap;
         }
 
-        /* CONTENEDOR PRINCIPAL DOS COLUMNAS */
+        .btn-cart-header i {
+            color: white !important;
+            font-size: 14px !important;
+        }
+
+        /* CAJA NEGRA ESLOGAN */
+        .badge-slogan {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.15;
+            border: 1px solid rgba(255,255,255,0.2);
+            white-space: nowrap;
+        }
+
+        .badge-slogan span {
+            color: var(--secondary);
+            display: block;
+        }
+
+        /* LAYOUT PRINCIPAL */
         .main-layout {
-            max-width: 1350px;
+            max-width: 1450px;
             margin: 25px auto;
             padding: 0 20px;
             display: grid;
@@ -184,9 +187,12 @@
             gap: 25px;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1150px) {
             .main-layout {
                 grid-template-columns: 1fr;
+            }
+            .nav-menu {
+                display: none;
             }
         }
 
@@ -196,7 +202,6 @@
             gap: 25px;
         }
 
-        /* CARRUSEL DE BANNERS (ULTIMAS NOTICIAS EN IMAGEN) */
         .banner-carousel-section {
             background: #1a1a1a;
             border-radius: var(--border-radius);
@@ -204,7 +209,7 @@
             box-shadow: 0 6px 18px rgba(0,0,0,0.15);
             position: relative;
             border: 2px solid var(--secondary);
-            min-height: 280px;
+            min-height: 260px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -212,7 +217,7 @@
 
         .banner-slide {
             width: 100%;
-            height: 300px;
+            height: 280px;
             background-size: cover;
             background-position: center;
             display: flex;
@@ -246,7 +251,6 @@
             opacity: 0.9;
         }
 
-        /* FILTROS DE CATEGORIAS */
         .categories-filter {
             display: flex;
             gap: 10px;
@@ -276,7 +280,6 @@
             box-shadow: 0 4px 10px rgba(230,0,18,0.2);
         }
 
-        /* CATALOGO DE PRODUCTOS */
         .catalog-header {
             display: flex;
             justify-content: space-between;
@@ -405,7 +408,6 @@
             opacity: 0.9;
         }
 
-        /* COLUMNA DERECHA: MI ORDEN / CARRITO */
         .content-right {
             background: white;
             border-radius: var(--border-radius);
@@ -413,7 +415,7 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.06);
             height: fit-content;
             position: sticky;
-            top: 90px;
+            top: 85px;
             border: 2px solid #ffcc00;
         }
 
@@ -499,7 +501,6 @@
             font-size: 13px;
         }
 
-        /* RESUMEN DE PAGO Y FACTURA */
         .order-summary-section {
             border-top: 2px dashed #e1e4e8;
             padding-top: 15px;
@@ -599,7 +600,6 @@
             margin-top: 10px;
         }
 
-        /* FOOTER */
         footer {
             background-color: #1a1a1a;
             color: white;
@@ -609,7 +609,7 @@
         }
 
         .footer-container {
-            max-width: 1350px;
+            max-width: 1450px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -651,30 +651,15 @@
             color: white;
             text-decoration: none;
         }
-
-        @media (max-width: 768px) {
-            .nav-menu { display: none; }
-            .header-container { justify-content: center; }
-            .search-box { max-width: 100%; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- BARRA SUPERIOR ANUNCIO -->
-    <div class="top-banner-bar">
-        <span>¡BUENAS HISTORIAS, MEJORES PERSONAS! 💖 Envíos a todo Colombia y pagos contraentrega disponibles.</span>
-    </div>
-
-    <!-- HEADER PRINCIPAL -->
+    <!-- ÚNICO ENCABEZADO AMARILLO PROFESIONAL -->
     <header>
         <div class="header-container">
             <a href="#" class="logo-container">
-                <div class="logo-badge">COMIC LANONA</div>
-                <div class="logo-text">
-                    <span>Tienda Anime - TCG</span>
-                    <strong>Coleccionables</strong>
-                </div>
+                <img src="encabezado/logo_nona.png" alt="Comic La Nona" class="logo-img" onerror="this.style.display='none'">
             </a>
 
             <div class="search-box">
@@ -687,20 +672,22 @@
                 <li><a href="#"><i class="fa-solid fa-border-all"></i>Categorías</a></li>
                 <li><a href="#"><i class="fa-solid fa-box-archive"></i>Productos</a></li>
                 <li><a href="#"><i class="fa-solid fa-trophy"></i>Torneos</a></li>
-                <li><a href="#"><i class="fa-solid fa-robot"></i>Noticias IA</a></li>
-                <li><a href="#"><i class="fa-solid fa-address-book"></i>Contacto</a></li>
-                <li><a href="#" class="btn-cart-toggle"><i class="fa-solid fa-cart-shopping"></i>Mi orden (<span id="cartCount">0</span>)</a></li>
+                <li><a href="#"><i class="fa-solid fa-newspaper"></i>Noticias IA</a></li>
+                <li><a href="#"><i class="fa-solid fa-comments"></i>Contacto</a></li>
             </ul>
+
+            <a href="#" class="btn-cart-header" onclick="document.querySelector('.content-right').scrollIntoView({behavior: 'smooth'}); return false;">
+                <i class="fa-solid fa-cart-shopping"></i> Mi orden (<span id="cartCount">0</span>)
+            </a>
+
+            <div class="badge-slogan">
+                ¡BUENAS HISTORIAS,<br><span>MEJORES PERSONAS!</span> 💖
+            </div>
         </div>
     </header>
 
-    <!-- LAYOUT PRINCIPAL -->
     <div class="main-layout">
-        
-        <!-- COLUMNA IZQUIERDA -->
         <div class="content-left">
-            
-            <!-- CARRUSEL / BANNERS DE ULTIMAS NOTICIAS EN VERSIÓN IMAGEN -->
             <div class="banner-carousel-section" id="bannerSection">
                 <div class="banner-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('assets/banners/banner_torneo.jpg');">
                     <div class="banner-caption">
@@ -711,7 +698,6 @@
                 </div>
             </div>
 
-            <!-- FILTRO DE CATEGORIAS -->
             <div>
                 <div class="categories-filter" id="categoryFilter">
                     <button class="cat-btn active" onclick="filterCategory('todos')"><i class="fa-solid fa-border-all"></i> Todos</button>
@@ -723,20 +709,15 @@
                 </div>
             </div>
 
-            <!-- CATALOGO DE PRODUCTOS VINCULADO A CARPETA EXTERNA (JSON / GITHUB) -->
             <div>
                 <div class="catalog-header">
                     <h3>Explora Nuestro Catálogo</h3>
-                    <span style="font-size: 12px; color: var(--gray);" id="catalogStatus">Cargando desde GitHub...</span>
+                    <span style="font-size: 12px; color: var(--gray);" id="catalogStatus">Cargando productos...</span>
                 </div>
-                <div class="products-grid" id="productsGrid">
-                    <!-- Se carga dinámicamente -->
-                </div>
+                <div class="products-grid" id="productsGrid"></div>
             </div>
-
         </div>
 
-        <!-- COLUMNA DERECHA: MI ORDEN / CARRITOR -->
         <div class="content-right">
             <div class="order-header">
                 <h3><i class="fa-solid fa-receipt"></i> Mi Orden</h3>
@@ -793,10 +774,8 @@
                 </button>
             </div>
         </div>
-
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <div class="footer-container">
             <div class="footer-info">
@@ -812,41 +791,29 @@
         </div>
     </footer>
 
-    <!-- SCRIPT DE CARGA DESDE GITHUB (Carpeta /productos/productos.json o respaldo local) -->
     <script>
         let products = [];
         let cart = [];
         let currentCategory = 'todos';
         let paymentMethod = 'direct';
 
-        // CARGAR PRODUCTOS DESDE OTRA CARPETA EN GITHUB
         async function loadProductsFromFolder() {
             try {
-                // Ruta orientada a la carpeta de productos en GitHub (ej. productos/productos.json)
                 const response = await fetch('productos/productos.json');
-                if (!response.ok) throw new Error('No se pudo cargar desde la carpeta productos/');
+                if (!response.ok) throw new Error('No se pudo cargar');
                 products = await response.json();
-                document.getElementById('catalogStatus').innerText = 'Actualizado desde GitHub ✨';
+                document.getElementById('catalogStatus').innerText = 'Actualizado ✨';
                 renderProducts(products);
             } catch (error) {
-                console.warn('Usando catálogo de respaldo local:', error);
-                // Respaldo de productos iniciales si aún no has subido el JSON a la carpeta
                 products = [
-                    { id: 1, name: "Jujutsu Kaisen #105", category: "Manga", price: 28000, stock: 4, image: "assets/productos/jujutsu_105.jpg" },
-                    { id: 2, name: "Figura Gojo Satoru 20 cm", category: "Figura", price: 60000, stock: 2, image: "assets/productos/gojo.jpg" },
-                    { id: 3, name: "One Piece #108", category: "Manga", price: 26000, stock: 3, image: "assets/productos/onepiece_108.jpg" },
-                    { id: 4, name: "Blue-Eyes White Dragon (Ultra Rare)", category: "TCG", price: 45000, stock: 3, image: "assets/productos/blue_eyes.jpg" },
-                    { id: 5, name: "Funko POP! Kakashi (Naruto)", category: "Figura", price: 65000, stock: 1, image: "assets/productos/kakashi.jpg" },
-                    { id: 6, name: "Llavero Naruto Shippuden", category: "Llavero", price: 8000, stock: 10, image: "assets/productos/llavero_naruto.jpg" },
-                    { id: 7, name: "Póster Wanted Luffy", category: "Poster", price: 12000, stock: 7, image: "assets/productos/poster_luffy.jpg" },
-                    { id: 8, name: "Pokémon TCG Sobre de Expansión", category: "TCG", price: 7000, stock: 15, image: "assets/productos/pokemon_pack.jpg" }
+                    { id: "AN-1", nombre: "Jujutsu Kaisen Vol. 25", precio: 28000, imagen: "" },
+                    { id: "AN-2", nombre: "Figura Gojo Satoru 20 cm", precio: 60000, imagen: "" }
                 ];
                 document.getElementById('catalogStatus').innerText = 'Catálogo activo';
                 renderProducts(products);
             }
         }
 
-        // RENDERIZAR PRODUCTOS DESDE TU JSON
         function renderProducts(filteredList) {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
@@ -856,16 +823,14 @@
                 return;
             }
 
-            filteredList.forEach((p, index) => {
-                // Detectar categoría basada en el ID (AN=Manga/Anime, VIT=Vitrina/Snacks, TCG=Cartas, etc.)
+            filteredList.forEach(p => {
                 let cat = "Coleccionable";
-                if (p.id.startsWith('AN')) cat = "Manga / Anime";
-                else if (p.id.startsWith('VIT')) cat = "Vitrina / Snacks";
-                else if (p.id.startsWith('TCG')) cat = "TCG / Cartas";
-                else if (p.id.startsWith('IMP')) cat = "Papelería";
-                else if (p.id.startsWith('JUE')) cat = "Juegos / Diversión";
+                if (p.id && p.id.startsWith('AN')) cat = "Manga / Anime";
+                else if (p.id && p.id.startsWith('VIT')) cat = "Vitrina / Snacks";
+                else if (p.id && p.id.startsWith('TCG')) cat = "TCG / Cartas";
+                else if (p.id && p.id.startsWith('IMP')) cat = "Papelería";
+                else if (p.id && p.id.startsWith('JUE')) cat = "Juegos / Diversión";
 
-                // Procesar la imagen (si hay varias separadas por coma, toma la primera)
                 let imageUrl = "";
                 if (p.imagen && !p.imagen.includes("Aquí va el link")) {
                     let links = p.imagen.split(',');
@@ -892,7 +857,7 @@
                                 <span class="product-price">$${p.precio.toLocaleString()}</span>
                                 <span class="product-stock"><span style="width:6px; height:6px; background:var(--success); border-radius:50%; display:inline-block;"></span> 5 disp.</span>
                             </div>
-                            <button class="btn-add-cart" onclick="addToCart('${p.id}', '${p.nombre.replace(/'/g, "")}', ${p.precio})">
+                            <button class="btn-add-cart" onclick="addToCart('${p.id || 1}', '${p.nombre.replace(/'/g, "")}', ${p.precio})">
                                 <i class="fa-solid fa-cart-plus"></i> Agregar
                             </button>
                         </div>
@@ -901,7 +866,6 @@
             });
         }
 
-        // FILTROS
         function filterCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
@@ -910,52 +874,47 @@
             if (cat === 'todos') {
                 renderProducts(products);
             } else {
-                renderProducts(products.filter(p => p.category.toLowerCase() === cat.toLowerCase()));
+                renderProducts(products.filter(p => {
+                    if (!p.id) return true;
+                    if (cat === 'Manga') return p.id.startsWith('AN');
+                    if (cat === 'Figura') return p.id.startsWith('ANI') || p.nombre.toLowerCase().includes('figura');
+                    if (cat === 'TCG') return p.id.startsWith('TCG');
+                    if (cat === 'Llavero') return p.nombre.toLowerCase().includes('llavero');
+                    if (cat === 'Poster') return p.nombre.toLowerCase().includes('poster');
+                    return true;
+                }));
             }
         }
 
         function filterProducts() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = products.filter(p => 
-                (currentCategory === 'todos' || p.category.toLowerCase() === currentCategory.toLowerCase()) &&
-                p.name.toLowerCase().includes(query)
-            );
+            const filtered = products.filter(p => p.nombre.toLowerCase().includes(query));
             renderProducts(filtered);
         }
 
-        // CARRITO Y ORDEN
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const cartItem = cart.find(item => item.id === productId);
-
+        function addToCart(id, name, price) {
+            const cartItem = cart.find(item => item.id === id);
             if (cartItem) {
-                if (cartItem.qty < product.stock) {
-                    cartItem.qty++;
-                } else {
-                    alert('¡Límite de stock alcanzado!');
-                }
+                cartItem.qty++;
             } else {
-                cart.push({ ...product, qty: 1 });
+                cart.push({ id, name, price, qty: 1 });
             }
             updateCartUI();
         }
 
-        function changeQty(productId, change) {
-            const item = cart.find(i => i.id === productId);
-            const product = products.find(p => p.id === productId);
+        function changeQty(id, change) {
+            const item = cart.find(i => i.id === id);
             if (item) {
                 item.qty += change;
                 if (item.qty <= 0) {
-                    cart = cart.filter(i => i.id !== productId);
-                } else if (item.qty > product.stock) {
-                    item.qty = product.stock;
+                    cart = cart.filter(i => i.id !== id);
                 }
             }
             updateCartUI();
         }
 
-        function removeFromCart(productId) {
-            cart = cart.filter(i => i.id !== productId);
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
             updateCartUI();
         }
 
@@ -998,10 +957,10 @@
                                 <span>$${item.price.toLocaleString()} c/u</span>
                             </div>
                             <div class="cart-item-controls">
-                                <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                                <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
                                 <span style="font-size:13px; font-weight:700;">${item.qty}</span>
-                                <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-                                <button class="remove-item-btn" onclick="removeFromCart(${item.id})"><i class="fa-solid fa-trash"></i></button>
+                                <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+                                <button class="remove-item-btn" onclick="removeFromCart('${item.id}')"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
                     `;
@@ -1041,14 +1000,13 @@
             updateCartUI();
         }
 
-        // WHATSAPP
         function sendWhatsAppOrder() {
             if (cart.length === 0) {
                 alert('Tu carrito está vacío.');
                 return;
             }
 
-            const city = document.getElementById('shippingCity').value;
+            const city = document.getElementById('shippingCity']['value'] || 'Piedecuesta';
             const payText = paymentMethod === 'direct' ? 'Pago Directo (Nequi / Daviplata)' : 'Contraentrega';
             let subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
             let totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
@@ -1072,7 +1030,6 @@
             window.open(`https://wa.me/573002506144?text=${message}`, '_blank');
         }
 
-        // Iniciar
         loadProductsFromFolder();
     </script>
 </body>
