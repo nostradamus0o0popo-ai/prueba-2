@@ -32,7 +32,7 @@
             color: #333;
         }
 
-        /* ENCABEZADO ÚNICO AMARILLO PROFESIONAL */
+        /* ENCABEZADO ÚNICO AMARILLO PROFESIONAL CON ICONOS */
         header {
             background: linear-gradient(90deg, #ffcc00, #ffbb00);
             border-bottom: 4px solid #e60012;
@@ -70,7 +70,7 @@
         /* BUSCADOR */
         .search-box {
             flex: 1;
-            max-width: 350px;
+            max-width: 320px;
             position: relative;
         }
 
@@ -100,11 +100,11 @@
             font-size: 14px;
         }
 
-        /* MENU NAVEGACION HORIZONTAL */
+        /* MENU NAVEGACION HORIZONTAL CON ICONOS */
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 6px;
+            gap: 10px;
             align-items: center;
         }
 
@@ -117,14 +117,14 @@
             flex-direction: column;
             align-items: center;
             gap: 2px;
-            padding: 5px 6px;
+            padding: 4px 8px;
             border-radius: 8px;
             transition: all 0.2s;
             white-space: nowrap;
         }
 
         .nav-menu a i {
-            font-size: 15px;
+            font-size: 16px;
             color: #1a1a1a;
         }
 
@@ -187,7 +187,7 @@
             gap: 25px;
         }
 
-        @media (max-width: 1150px) {
+        @media (max-width: 1200px) {
             .main-layout {
                 grid-template-columns: 1fr;
             }
@@ -655,7 +655,7 @@
 </head>
 <body>
 
-    <!-- ÚNICO ENCABEZADO AMARILLO PROFESIONAL -->
+    <!-- ENCABEZADO AMARILLO PROFESIONAL CON ICONOS -->
     <header>
         <div class="header-container">
             <a href="#" class="logo-container">
@@ -667,6 +667,7 @@
                 <input type="text" id="searchInput" placeholder="Buscar productos, mangas, figuras..." oninput="filterProducts()">
             </div>
 
+            <!-- ICONOS DEL MENÚ QUE FALTABAN -->
             <ul class="nav-menu">
                 <li><a href="#" class="active"><i class="fa-solid fa-house"></i>Inicio</a></li>
                 <li><a href="#"><i class="fa-solid fa-border-all"></i>Categorías</a></li>
@@ -1006,7 +1007,7 @@
                 return;
             }
 
-            const city = document.getElementById('shippingCity']['value'] || 'Piedecuesta';
+            const city = document.getElementById('shippingCity')['value'] || 'Piedecuesta';
             const payText = paymentMethod === 'direct' ? 'Pago Directo (Nequi / Daviplata)' : 'Contraentrega';
             let subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
             let totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
