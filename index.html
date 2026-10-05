@@ -846,7 +846,7 @@
             }
         }
 
-        // RENDERIZAR PRODUCTOS
+        // RENDERIZAR PRODUCTOS DESDE TU JSON
         function renderProducts(filteredList) {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
@@ -856,28 +856,43 @@
                 return;
             }
 
-            filteredList.forEach(p => {
-                let bgStyle = p.image ? `background-image: url('${p.image}');` : `background: #f8f9fa;`;
-                let iconHtml = !p.image ? '<i class="fa-solid fa-box" style="font-size: 35px; color: #ccc;"></i>' : '';
+            filteredList.forEach((p, index) => {
+                // Detectar categoría basada en el ID (AN=Manga/Anime, VIT=Vitrina/Snacks, TCG=Cartas, etc.)
+                let cat = "Coleccionable";
+                if (p.id.startsWith('AN')) cat = "Manga / Anime";
+                else if (p.id.startsWith('VIT')) cat = "Vitrina / Snacks";
+                else if (p.id.startsWith('TCG')) cat = "TCG / Cartas";
+                else if (p.id.startsWith('IMP')) cat = "Papelería";
+                else if (p.id.startsWith('JUE')) cat = "Juegos / Diversión";
+
+                // Procesar la imagen (si hay varias separadas por coma, toma la primera)
+                let imageUrl = "";
+                if (p.imagen && !p.imagen.includes("Aquí va el link")) {
+                    let links = p.imagen.split(',');
+                    imageUrl = links[0].trim();
+                }
+
+                let bgStyle = imageUrl ? `background-image: url('${imageUrl}'); background-size: cover; background-position: center;` : `background: #f8f9fa;`;
+                let iconHtml = !imageUrl ? '<i class="fa-solid fa-box" style="font-size: 35px; color: #ccc;"></i>' : '';
 
                 grid.innerHTML += `
                     <div class="product-card">
                         <div>
                             <div class="product-img-box" style="${bgStyle}">
-                                <span class="product-tag">${p.category}</span>
+                                <span class="product-tag">${cat}</span>
                                 ${iconHtml}
                             </div>
                             <div class="product-details">
-                                <div class="product-category-label">${p.category}</div>
-                                <h4>${p.name}</h4>
+                                <div class="product-category-label">${cat}</div>
+                                <h4>${p.nombre}</h4>
                             </div>
                         </div>
                         <div>
                             <div class="product-price-stock">
-                                <span class="product-price">$${p.price.toLocaleString()}</span>
-                                <span class="product-stock"><span style="width:6px; height:6px; background:var(--success); border-radius:50%; display:inline-block;"></span> ${p.stock} disp.</span>
+                                <span class="product-price">$${p.precio.toLocaleString()}</span>
+                                <span class="product-stock"><span style="width:6px; height:6px; background:var(--success); border-radius:50%; display:inline-block;"></span> 5 disp.</span>
                             </div>
-                            <button class="btn-add-cart" onclick="addToCart(${p.id})">
+                            <button class="btn-add-cart" onclick="addToCart('${p.id}', '${p.nombre.replace(/'/g, "")}', ${p.precio})">
                                 <i class="fa-solid fa-cart-plus"></i> Agregar
                             </button>
                         </div>
