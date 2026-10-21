@@ -815,7 +815,7 @@
             }
         }
 
-        function renderProducts(filteredList) {
+       function renderProducts(filteredList) {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
 
@@ -824,7 +824,7 @@
                 return;
             }
 
-            filteredList.forEach(p => {
+            filteredList.forEach((p, index) => {
                 let cat = "Coleccionable";
                 if (p.id && p.id.startsWith('AN')) cat = "Manga / Anime";
                 else if (p.id && p.id.startsWith('VIT')) cat = "Vitrina / Snacks";
@@ -834,30 +834,36 @@
 
                 let images = [];
                 if (p.imagen && !p.imagen.includes("Aquí va el link")) {
-                    images = p.imagen.split(',').map(img => img.trim());
+                    images = p.imagen.split(',').map(img => img.trim()).filter(img => img.length > 0);
                 }
+
                 let imageContent = '';
                 if (images.length > 0) {
                     imageContent = `
                     <div class="carousel-container" id="carousel-${index}">
-                    <div class="carousel-slide" style="background-image: url('${images[0]}');" data-images='${JSON.stringify(images)}' data-current="0"></div>
-                    ${images.length > 1 ? `
-                    <button class="carousel-btn prev" onclick="moveSlide(event, ${index}, -1)"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button class="carousel-btn next" onclick="moveSlide(event, ${index}, 1)"><i class="fa-solid fa-chevron-right"></i></button>
-                    ` : ''}
+                        <span class="product-tag">${cat}</span>
+                        <div class="carousel-slide" style="background-image: url('${images[0]}');" data-images='${JSON.stringify(images)}' data-current="0"></div>
+                        ${images.length > 1 ? `
+                        <button class="carousel-btn prev" onclick="moveSlide(event, ${index}, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="carousel-btn next" onclick="moveSlide(event, ${index}, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        ` : ''}
                     </div>
                     `;
                 } else {
-                    imageContent = `<div class="product-img-box" style="background: #f8f9fa;"><i class="fa-solid fa-box" style="font-size: 35px; color: #ccc;"></i></div>`;
+                    imageContent = `
+                    <div class="carousel-container">
+                        <span class="product-tag">${cat}</span>
+                        <div style="display:flex; align-items:center; justify-content:center; height:100%; width:100%; background:#f8f9fa;">
+                            <i class="fa-solid fa-box" style="font-size: 35px; color: #ccc;"></i>
+                        </div>
+                    </div>
+                    `;
                 }
 
                 grid.innerHTML += `
                     <div class="product-card">
                         <div>
-                            <div class="product-img-box" style="${bgStyle}">
-                                <span class="product-tag">${cat}</span>
-                                ${iconHtml}
-                            </div
+                            ${imageContent}
                             <div class="product-details">
                                 <div class="product-category-label">${cat}</div>
                                 <h4>${p.nombre}</h4>
@@ -868,7 +874,7 @@
                                 <span class="product-price">$${p.precio.toLocaleString()}</span>
                                 <span class="product-stock"><span style="width:6px; height:6px; background:var(--success); border-radius:50%; display:inline-block;"></span> 5 disp.</span>
                             </div>
-                            <button class="btn-add-cart" onclick="addToCart('${p.id || 1}', '${p.nombre.replace(/'/g, "")}', ${p.precio})">
+                            <button class="btn-add-cart" onclick="addToCart('${p.id || index}', '${p.nombre.replace(/'/g, "")}', ${p.precio})">
                                 <i class="fa-solid fa-cart-plus"></i> Agregar
                             </button>
                         </div>
