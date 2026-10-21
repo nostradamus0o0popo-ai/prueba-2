@@ -832,14 +832,24 @@
                 else if (p.id && p.id.startsWith('IMP')) cat = "Papelería";
                 else if (p.id && p.id.startsWith('JUE')) cat = "Juegos / Diversión";
 
-                let imageUrl = "";
+                let images = [];
                 if (p.imagen && !p.imagen.includes("Aquí va el link")) {
-                    let links = p.imagen.split(',');
-                    imageUrl = links[0].trim();
+                    images = p.imagen.split(',').map(img => img.trim());
                 }
-
-                let bgStyle = imageUrl ? `background-image: url('${imageUrl}'); background-size: cover; background-position: center;` : `background: #f8f9fa;`;
-                let iconHtml = !imageUrl ? '<i class="fa-solid fa-box" style="font-size: 35px; color: #ccc;"></i>' : '';
+                let imageContent = '';
+                if (images.length > 0) {
+                    imageContent = `
+                    <div class="carousel-container" id="carousel-${index}">
+                    <div class="carousel-slide" style="background-image: url('${images[0]}');" data-images='${JSON.stringify(images)}' data-current="0"></div>
+                    ${images.length > 1 ? `
+                    <button class="carousel-btn prev" onclick="moveSlide(event, ${index}, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="carousel-btn next" onclick="moveSlide(event, ${index}, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    ` : ''}
+                    </div>
+                    `;
+                } else {
+                    imageContent = `<div class="product-img-box" style="background: #f8f9fa;"><i class="fa-solid fa-box" style="font-size: 35px; color: #ccc;"></i></div>`;
+                }
 
                 grid.innerHTML += `
                     <div class="product-card">
@@ -847,7 +857,7 @@
                             <div class="product-img-box" style="${bgStyle}">
                                 <span class="product-tag">${cat}</span>
                                 ${iconHtml}
-                            </div>
+                            </div
                             <div class="product-details">
                                 <div class="product-category-label">${cat}</div>
                                 <h4>${p.nombre}</h4>
@@ -1030,7 +1040,20 @@
 
             window.open(`https://wa.me/573002506144?text=${message}`, '_blank');
         }
+        function moveSlide(event, productIndex, direction) {
+    event.stopPropagation();
+    const container = document.getElementById(`carousel-${productIndex}`);
+    const slide = container.querySelector('.carousel-slide');
+    const images = JSON.parse(slide.getAttribute('data-images'));
+    let currentIndex = parseInt(slide.getAttribute('data-current'));
 
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = images.length - 1;
+    if (currentIndex >= images.length) currentIndex = 0;
+
+    slide.setAttribute('data-current', currentIndex);
+    slide.style.backgroundImage = `url('${images[currentIndex]}')`;
+}
         loadProductsFromFolder();
     </script>
 </body>
