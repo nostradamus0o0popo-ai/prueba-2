@@ -832,20 +832,27 @@
                 else if (p.id && p.id.startsWith('IMP')) cat = "Papelería";
                 else if (p.id && p.id.startsWith('JUE')) cat = "Juegos / Diversión";
 
-                // Limpiamos y leemos la ruta de la imagen del JSON de forma directa y segura
-                let imgPath = p.imagen ? p.imagen.trim() : "";
+                // Procesamos las imágenes separadas por coma si hay varias en el JSON
+                let images = [];
+                if (p.imagen && !p.imagen.includes("Aquí va el link")) {
+                    images = p.imagen.split(',').map(img => img.trim()).filter(img => img.length > 0);
+                }
 
                 let imageContent = '';
-                if (imgPath) {
+                if (images.length > 0) {
                     imageContent = `
-                    <div class="product-img-box" style="background: #fff; padding: 5px;">
+                    <div class="carousel-container" id="carousel-${index}" style="position:relative; width:100%; height:100%; overflow:hidden;">
                         <span class="product-tag">${cat}</span>
-                        <img src="${imgPath}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;" onerror="this.parentElement.innerHTML='📦'">
+                        <div class="carousel-slide" style="width:100%; height:100%; background-image: url('${images[0]}'); background-size: contain; background-position: center; background-repeat: no-repeat;" data-images='${JSON.stringify(images)}' data-current="0"></div>
+                        ${images.length > 1 ? `
+                        <button class="carousel-btn prev" onclick="moveSlide(event, ${index}, -1)" style="position:absolute; left:5px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:#fff; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-chevron-left" style="font-size:10px;"></i></button>
+                        <button class="carousel-btn next" onclick="moveSlide(event, ${index}, 1)" style="position:absolute; right:5px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:#fff; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-chevron-right" style="font-size:10px;"></i></button>
+                        ` : ''}
                     </div>
                     `;
                 } else {
                     imageContent = `
-                    <div class="product-img-box">
+                    <div class="carousel-container" style="position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
                         <span class="product-tag">${cat}</span>
                         <i class="fa-solid fa-box" style="font-size: 35px; color: #ccc;"></i>
                     </div>
@@ -855,7 +862,9 @@
                 grid.innerHTML += `
                     <div class="product-card">
                         <div>
-                            ${imageContent}
+                            <div class="product-img-box">
+                                ${imageContent}
+                            </div>
                             <div class="product-details">
                                 <div class="product-category-label">${cat}</div>
                                 <h4>${p.nombre}</h4>
