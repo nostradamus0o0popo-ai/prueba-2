@@ -1086,6 +1086,62 @@
     slide.style.backgroundImage = `url('${images[currentIndex]}')`;
 }
         loadProductsFromFolder();
+        // -----------------------------------------------------------------
+        // CONFIGURACIÓN DE TUS BANNERS:
+        // Aquí pones la ruta de tu imagen en GitHub y el enlace de WhatsApp
+        // -----------------------------------------------------------------
+        const bannerList = [
+            {
+                img: "assets/banners/New Project.png",  // <-- Reemplaza con la ruta de tu 1ra imagen en GitHub
+                link: "https://wa.me/573002506144?text=¡Hola!%20Quiero%20información%20del%20torneo"
+            },
+            {
+                img: "assets/banners/sadadsdsa.png",        // <-- Reemplaza con la ruta de tu 2da imagen en GitHub
+                link: "https://wa.me/573002506144?text=¡Hola!%20Quiero%20saber%20más%20de%20las%20novedades"
+            }
+        ];
+
+        let currentBannerIndex = 0;
+        let bannerInterval;
+
+        function initBannerCarousel() {
+            const track = document.getElementById('bannerTrack');
+            if (!track) return;
+
+            track.innerHTML = bannerList.map(b => `
+                <a href="${b.link}" target="_blank" class="banner-item" style="background-image: url('${b.img}');"></a>
+            `).join('');
+
+            startBannerTimer();
+        }
+
+        function showBanner(index) {
+            const track = document.getElementById('bannerTrack');
+            if (!track) return;
+
+            if (index >= bannerList.length) currentBannerIndex = 0;
+            else if (index < 0) currentBannerIndex = bannerList.length - 1;
+            else currentBannerIndex = index;
+
+            track.style.transform = `translateX(-${currentBannerIndex * 100}%)`;
+        }
+
+        function moveBanner(direction) {
+            clearInterval(bannerInterval); // Reinicia el tiempo al hacer clic en las flechas
+            showBanner(currentBannerIndex + direction);
+            startBannerTimer();
+        }
+
+        function startBannerTimer() {
+            bannerInterval = setInterval(() => {
+                showBanner(currentBannerIndex + 1);
+            }, 5000); // Cambia automáticamente cada 5 segundos
+        }
+
+        // Ejecutar el carrusel al cargar la página
+        window.addEventListener('load', () => {
+            initBannerCarousel();
+        });
     </script>
 </body>
 </html>
