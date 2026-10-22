@@ -684,18 +684,44 @@
             </div>
         </div>
     </header>
+                    <!-- Estilos del Banner Panorámico -->
+    <style>
+        .banner-carousel-section {
+            background: #1a1a1a;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            position: relative;
+            border: 2px solid var(--secondary);
+            width: 100%;
+            height: 240px;
+        }
+        .banner-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .banner-item {
+            min-width: 100%;
+            height: 100%;
+            display: block;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
 
-    <div class="main-layout">
-        <div class="content-left">
-            <div class="banner-carousel-section" id="bannerSection">
-                <div class="banner-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('assets/banners/banner_torneo.jpg');">
-                    <div class="banner-caption">
-                        <span style="background: var(--secondary); color: var(--dark); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">EVENTO DESTACADO</span>
-                        <h3>Torneo Commander COMICLANONA</h3>
-                        <p>Sábado 24 de Mayo - ¡Inscríbete y participa por grandes premios!</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Estructura del Banner con Carrusel y Flechas -->
+    <div class="banner-carousel-section" id="bannerSection">
+        <div class="banner-track" id="bannerTrack">
+            <!-- Las imágenes se cargan automáticamente con JavaScript -->
+        </div>
+        
+        <!-- Flechas de navegación -->
+        <button onclick="moveBanner(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; font-size: 18px;">‹</button>
+        <button onclick="moveBanner(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; font-size: 18px;">›</button>
+    </div>
 
             <div>
                 <div class="categories-filter" id="categoryFilter">
