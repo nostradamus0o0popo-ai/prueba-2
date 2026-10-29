@@ -367,8 +367,8 @@
             border-radius: 16px;
             border: 3px solid var(--secondary);
             width: 100%;
-            max-width: 480px; /* Un poco más compacto */
-            padding: 35px 20px 20px 20px; /* Padding superior extra para no pisar la X */
+            max-width: 480px;
+            padding: 35px 20px 20px 20px; /* Padding superior para despejar la X */
             position: relative;
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
             transform: scale(0.85);
@@ -398,8 +398,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s, background 0.2s;
-            z-index: 20; /* Siempre por encima de la imagen */
+            transition: transform 0.2s;
+            z-index: 20;
         }
 
         .close-modal-btn:hover {
@@ -409,26 +409,47 @@
 
         .modal-img-box {
             width: 100%;
-            height: 220px; /* Reducido para mejor proporción */
+            height: 220px;
             background: #f8f9fa;
             border-radius: 12px;
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
+            overflow: hidden;
         }
+
+        .modal-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+
+        .modal-nav-btn:hover {
+            background: var(--primary);
+        }
+
+        .modal-nav-btn.prev { left: 8px; }
+        .modal-nav-btn.next { right: 8px; }
 
         .modal-details h3 {
             font-family: 'Baloo 2', cursive;
             font-size: 20px;
             color: var(--dark);
-            margin-bottom: 4px;
-        }
-
-        .modal-details p {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
+            margin-bottom: 2px;
         }
 
         .modal-price {
@@ -436,7 +457,7 @@
             font-size: 22px;
             font-weight: 800;
             color: var(--primary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         /* BOTÓN FLOTANTE EN LA ESQUINITA DERECHA */
@@ -706,11 +727,17 @@
         </div>
     </main>
 
-    <!-- MODAL DE PRODUCTO DETALLADO (AGRANDADO) -->
+    <!-- MODAL DE PRODUCTO DETALLADO (AGRANDADO CON CARRUSEL) -->
     <div class="product-modal-overlay" id="productModal" onclick="closeProductModal(event)">
         <div class="product-modal-card" onclick="event.stopPropagation()">
             <button class="close-modal-btn" onclick="closeProductModal()">✕</button>
-            <div class="modal-img-box" id="modalImg"></div>
+            
+            <!-- Contenedor con carrusel para múltiples fotos en el modal -->
+            <div class="modal-img-box" id="modalImg">
+                <button class="modal-nav-btn prev" id="modalPrevBtn" onclick="moveModalImage(-1)">‹</button>
+                <button class="modal-nav-btn next" id="modalNextBtn" onclick="moveModalImage(1)">›</button>
+            </div>
+
             <div class="modal-details">
                 <span class="product-category-label" id="modalCat">Categoría</span>
                 <h3 id="modalTitle">Nombre del Producto</h3>
@@ -804,6 +831,10 @@
         let paymentMethod = 'direct';
         let isCartOpen = false;
 
+        // Variables de imágenes del modal activo
+        let modalImagesList = [];
+        let modalCurrentImgIndex = 0;
+
         function toggleCart() {
             isCartOpen = !isCartOpen;
             const sidebar = document.getElementById('cartSidebar');
@@ -814,7 +845,7 @@
             }
         }
 
-        /* ===== FUNCIONES PARA EL MODAL DE AGRANDAR PRODUCTO ===== */
+        /* ===== FUNCIONES PARA EL MODAL DE AGRANDAR PRODUCTO CON FOTOS ===== */
         function openProductModal(index) {
             const p = products[index];
             if (!p) return;
@@ -826,18 +857,13 @@
             else if (p.id && p.id.startsWith('IMP')) cat = "Papelería";
             else if (p.id && p.id.startsWith('JUE')) cat = "Juegos / Diversión";
 
-            let images = [];
+            modalImagesList = [];
             if (p.imagen && !p.imagen.includes("Aquí va el link")) {
-                images = p.imagen.split(',').map(img => img.trim()).filter(img => img.length > 0);
+                modalImagesList = p.imagen.split(',').map(img => img.trim()).filter(img => img.length > 0);
             }
 
-            const modalImg = document.getElementById('modalImg');
-            if (images.length > 0) {
-                modalImg.style.backgroundImage = `url('${images[0]}')`;
-            } else {
-                modalImg.style.backgroundImage = 'none';
-                modalImg.innerHTML = '<i class="fa-solid fa-box" style="font-size: 60px; color: #ccc; display:flex; height:100%; align-items:center; justify-content:center;"></i>';
-            }
+            modalCurrentImgIndex = 0;
+            updateModalImageDisplay();
 
             document.getElementById('modalCat').innerText = cat;
             document.getElementById('modalTitle').innerText = p.nombre;
@@ -850,6 +876,34 @@
             };
 
             document.getElementById('productModal').classList.add('active');
+        }
+
+        function updateModalImageDisplay() {
+            const modalImg = document.getElementById('modalImg');
+            const prevBtn = document.getElementById('modalPrevBtn');
+            const nextBtn = document.getElementById('modalNextBtn');
+
+            if (modalImagesList.length > 0) {
+                modalImg.style.backgroundImage = `url('${modalImagesList[modalCurrentImgIndex]}')`;
+            } else {
+                modalImg.style.backgroundImage = 'none';
+            }
+
+            if (modalImagesList.length > 1) {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        function moveModalImage(direction) {
+            if (modalImagesList.length <= 1) return;
+            modalCurrentImgIndex += direction;
+            if (modalCurrentImgIndex < 0) modalCurrentImgIndex = modalImagesList.length - 1;
+            if (modalCurrentImgIndex >= modalImagesList.length) modalCurrentImgIndex = 0;
+            updateModalImageDisplay();
         }
 
         function closeProductModal(event) {
