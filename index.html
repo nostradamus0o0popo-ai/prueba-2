@@ -408,15 +408,132 @@
             opacity: 0.9;
         }
 
-        .content-right {
-            background: white;
-            border-radius: var(--border-radius);
+       /* ===== Carrito Flotante y Panel Lateral ===== */
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 22px;
+            box-shadow: 0 4px 20px rgba(230, 0, 18, 0.5);
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.2s, background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-cart-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--secondary);
+            color: #121212;
+            font-size: 12px;
+            font-weight: 800;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #121212;
+        }
+
+        /* Transición para encoger el contenido principal cuando se abre el carrito */
+        .main-content {
+            transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 1450px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+
+        .main-content.cart-open {
+            margin-right: 380px;
+        }
+
+        /* Panel Lateral */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100vh;
+            background: #1a1a1a;
+            border-left: 2px solid var(--secondary);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+            z-index: 1000;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            color: white;
+            padding: 0;
+        }
+
+        .cart-sidebar.is-open {
+            right: 0;
+        }
+
+        .cart-sidebar-header {
+            background: var(--secondary);
+            color: #121212;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cart-sidebar-header h3 {
+            margin: 0;
+            font-family: 'Baloo 2', cursive;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-cart-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #121212;
+        }
+
+        .cart-sidebar-body {
+            flex: 1;
+            overflow-y: auto;
             padding: 20px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-            height: fit-content;
-            position: sticky;
-            top: 85px;
-            border: 2px solid #ffcc00;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .nav-menu {
+                display: none;
+            }
+            .main-content.cart-open {
+                margin-right: 0;
+            }
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
         }
 
         .order-header {
@@ -1143,5 +1260,69 @@
             initBannerCarousel();
         });
     </script>
+                    </main> <!-- Fin del main-content -->
+
+    <!-- Botón Flotante del Carrito -->
+    <button class="floating-cart-btn" onclick="toggleCart()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-badge" id="cartCountBadge">0</span>
+    </button>
+
+    <!-- Panel Lateral del Carrito -->
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-sidebar-header">
+            <h3><i class="fa-solid fa-receipt"></i> Mi Pedido</h3>
+            <button class="close-cart-btn" onclick="toggleCart()">✕</button>
+        </div>
+        
+        <div class="cart-sidebar-body">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 8px;">
+                <span style="font-size: 13px; color: #aaa;">Productos seleccionados</span>
+                <span style="font-size: 12px; color: var(--primary); cursor: pointer;" onclick="clearCart()">Vaciar todo</span>
+            </div>
+
+            <div class="cart-items-list" id="cartItemsList" style="max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+                <div class="empty-cart-msg" style="text-align:center; color:#888; padding: 30px 0;">Tu carrito está vacío.<br>¡Agrega productos para comenzar!</div>
+            </div>
+
+            <div class="order-summary-section" style="border-top: 1px solid #333; padding-top: 12px; display: flex; flex-direction: column; gap: 10px;">
+                <div class="form-group-custom">
+                    <label style="font-size: 11px; color: #aaa;">Forma de Pago</label>
+                    <div class="payment-options">
+                        <div class="payment-option-card selected" id="payDirect" onclick="setPayment('direct')" style="background:#242424; color:#fff; border-color:#444;">Pago Directo</div>
+                        <div class="payment-option-card" id="payCod" onclick="setPayment('cod')" style="background:#242424; color:#fff; border-color:#444;">Contraentrega</div>
+                    </div>
+                </div>
+
+                <div class="form-group-custom">
+                    <label for="shippingCity" style="font-size: 11px; color: #aaa;">Ciudad de Entrega</label>
+                    <select id="shippingCity" onchange="updateTotals()" style="width:100%; padding: 6px; background:#242424; color:#fff; border:1px solid #444; border-radius:6px;">
+                        <option value="Piedecuesta">Piedecuesta ($8.000)</option>
+                        <option value="Bucaramanga">Bucaramanga ($9.000)</option>
+                        <option value="Floridablanca">Floridablanca ($9.000)</option>
+                        <option value="Girón">Girón ($10.000)</option>
+                        <option value="Otro Municipio">Otro Municipio ($15.000)</option>
+                    </select>
+                </div>
+
+                <div class="summary-row" style="display:flex; justify-content:space-between; font-size:12px; color:#ccc;">
+                    <span>Artículos (<span id="summaryCount">0</span>)</span>
+                    <span>$<span id="subtotalAmount">0</span></span>
+                </div>
+                <div class="summary-row" style="display:flex; justify-content:space-between; font-size:12px; color:#ccc;">
+                    <span>Envío</span>
+                    <span>$<span id="shippingAmount">8.000</span></span>
+                </div>
+                <div class="summary-row total" style="display:flex; justify-content:space-between; font-size:16px; font-weight:bold; color:var(--secondary); border-top:1px dashed #444; padding-top:6px;">
+                    <span>TOTAL</span>
+                    <span>$<span id="totalAmount">0</span></span>
+                </div>
+
+                <button class="btn-whatsapp-order" onclick="sendWhatsAppOrder()" style="width:100%; background:var(--whatsapp); color:#fff; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Enviar Pedido por WhatsApp
+                </button>
+            </div>
+        </div>
+    </aside>
 </body>
 </html>
